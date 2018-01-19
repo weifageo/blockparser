@@ -1,5 +1,5 @@
 // modified by weifa for use with GeoCoin and the Qubit mining algorithm
-// original source was h9.h, removed the extra mining algorithms to reduce it to the 5 used in Qubit
+// original source was h9.h and GeoCoin's hashblock.h, removed the extra mining algorithms to reduce it to the 5 used in Qubit
 #ifndef HASHBLOCK_H
 #define HASHBLOCK_H
 
