@@ -371,6 +371,15 @@
             uint64_t      size
         );
     #endif
+	
+	#if defined(GEOCOIN)
+	// modified example from Darkcoin h9 above, using new qubit function
+        void qubit(
+                  uint8_t *h9r,
+            const uint8_t *buf,
+            uint64_t      size
+        );
+    #endif
 
     static inline void sha256Twice(
               uint8_t *sha,

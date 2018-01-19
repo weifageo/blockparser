@@ -125,6 +125,17 @@ static double getMem() {
     static const uint32_t gExpectedMagic = 0x2d3b3c4b;
 #endif
 
+#if defined GEOCOIN
+    static const size_t gHeaderSize = 80;
+    static auto kCoinDirName = ".geocoin";
+	// following the discussion here: https://bitcointalk.org/index.php?topic=1350090.0
+	// download the blockchain and run the following command
+	// head -c 300 blk00000.dat | hexdump -C
+	// response: 00000000  ae bf c0 d1
+	// start with 0x, then add pairs in reverse order > 0xd1c0bfae
+    static const uint32_t gExpectedMagic = 0xd1c0bfae;
+#endif
+
 #if defined JUMBUCKS
     static const size_t gHeaderSize = 80;
     static auto kCoinDirName = ".coinmarketscoin";
@@ -405,7 +416,7 @@ static void parseTX(
             SKIP(uint32_t, nVersion, p);
         #endif
 
-        #if defined(PEERCOIN) || defined(CLAM) || defined(JUMBUCKS) || defined(PAYCON)
+        #if defined(PEERCOIN) || defined(CLAM) || defined(JUMBUCKS) || defined(PAYCON) || defined(GEOCOIN)
             SKIP(uint32_t, nTime, p);
         #endif
 
@@ -474,7 +485,7 @@ static bool parseBlock(
                 }
             endTXs(p);
 
-            #if defined(PEERCOIN) || defined(CLAM) || defined(JUMBUCKS) || defined(PAYCON)
+            #if defined(PEERCOIN) || defined(CLAM) || defined(JUMBUCKS) || defined(PAYCON) || defined(GEOCOIN)
                 LOAD_VARINT(vchBlockSigSize, p);
                 p += vchBlockSigSize;
             #endif
@@ -736,6 +747,9 @@ static void getBlockHeader(
         }
     #elif defined(JUMBUCKS)
         scrypt(hash, p, gHeaderSize);
+	#elif defined(GEOCOIN)
+		// made a new qubit function, pass it the same variables as the h9 and h13 cryptocoins
+        qubit(hash, p, gHeaderSize);
     #else
         sha256Twice(hash, p, gHeaderSize);
     #endif

@@ -578,6 +578,12 @@ static int getCoinType() {
         #if defined(JUMBUCKS)
             43
         #endif
+		
+		#if defined(GEOCOIN)
+		// using this as a reference: http://cryptolife.net/upwg/
+		// first character of a GeoCoin wallet is "G"
+            38
+        #endif
 
         #if defined(DOGECOIN)
             30
@@ -1015,6 +1021,10 @@ const char *getInterestingAddr() {
     #elif defined(JUMBUCKS)
 
         "JhbrvAmM7kNpwA6wD5KoAsbtikLWWMNPcM"
+		
+	#elif defined(GEOCOIN)
+		// not interesting
+        "GaadoWDkLTbeV9R8Byu2xbzVhZU4auZLJF"
 
     #elif defined(MYRIADCOIN)
 
@@ -1045,6 +1055,22 @@ const char *getInterestingAddr() {
         uint64_t      size
     ) {
         uint256 hash = Hash9(buf, size + buf);
+        memcpy(h9r, &hash, sizeof(hash));
+    }
+
+#endif
+
+#if defined(GEOCOIN)
+// define the new qubit and Qubit5 functions
+    #include <h9/qubit.h>	// this is a brand new file I hacked from the h9 algorithm script
+
+	// same code as the h9 above, modified for GeoCoin, qubit, Qubit5 algorithm
+    void qubit(
+              uint8_t *h9r,
+        const uint8_t *buf,
+        uint64_t      size
+    ) {
+        uint256 hash = Qubit5(buf, size + buf);
         memcpy(h9r, &hash, sizeof(hash));
     }
 

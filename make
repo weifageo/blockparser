@@ -122,7 +122,7 @@ my($fortran) = "gfortran++";
 my(@inc) = qw(
     -I.
     -DNDEBUG
-    -DBITCOIN
+    -DGEOCOIN
     -DWANT_DENSE
     -D__STDC_FORMAT_MACROS=1
 );
@@ -131,6 +131,7 @@ my(@inc) = qw(
 #-DPAYCON
 #-DBITCOIN
 #-DDARKCOIN
+#-DGEOCOIN
 #-DJUMBUCKS
 #-DLITECOIN
 #-DPEERCOIN
@@ -176,8 +177,8 @@ my(@lib) = qw(
     h9/shavite.c
     h9/cubehash.c
     h9/aes_helper.c
-
-    scrypt/pbkdf2.cpp
+	
+	scrypt/pbkdf2.cpp
     scrypt/scrypt.cpp
 
     util.cpp
