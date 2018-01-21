@@ -416,7 +416,7 @@ static void parseTX(
             SKIP(uint32_t, nVersion, p);
         #endif
 
-        #if defined(PEERCOIN) || defined(CLAM) || defined(JUMBUCKS) || defined(PAYCON) || defined(GEOCOIN)
+        #if defined(PEERCOIN) || defined(CLAM) || defined(JUMBUCKS) || defined(PAYCON)
             SKIP(uint32_t, nTime, p);
         #endif
 
@@ -485,7 +485,7 @@ static bool parseBlock(
                 }
             endTXs(p);
 
-            #if defined(PEERCOIN) || defined(CLAM) || defined(JUMBUCKS) || defined(PAYCON) || defined(GEOCOIN)
+            #if defined(PEERCOIN) || defined(CLAM) || defined(JUMBUCKS) || defined(PAYCON)
                 LOAD_VARINT(vchBlockSigSize, p);
                 p += vchBlockSigSize;
             #endif
@@ -747,8 +747,8 @@ static void getBlockHeader(
         }
     #elif defined(JUMBUCKS)
         scrypt(hash, p, gHeaderSize);
-	#elif defined(GEOCOIN)
-		// made a new qubit function, pass it the same variables as the h9 and h13 cryptocoins
+    #elif defined(GEOCOIN)
+	// made a new qubit function, pass it the same variables as the h9 and h13 cryptocoins
         qubit(hash, p, gHeaderSize);
     #else
         sha256Twice(hash, p, gHeaderSize);
